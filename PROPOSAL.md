@@ -87,6 +87,8 @@ Random thoughts:
    even the first message.
  - I may forgo the [recommended cryptographic algorithms][4] and instead use the
    [NaCl][5] library.  I've always wanted to use it.
+ - The name is an acronym for Secure UDP.  It's a random permutation. That's how
+   you know it's secure.
 
 
 
