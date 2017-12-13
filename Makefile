@@ -3,11 +3,15 @@ OBJS=\
   obj/dh-ratchet.o \
   obj/hmac-ratchet.o \
   obj/session.o \
+  obj/socket.o \
   obj/wrappers.o
 
 TESTS=\
+	keygen.out \
 	example.out \
-	session.out
+	session.out \
+	server.out \
+	client.out
 
 CXX_FLAGS=-Wall -Werror
 

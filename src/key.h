@@ -21,6 +21,10 @@ namespace Spud {
       }
     }
 
+    uint8_t* data() {
+      return mData;
+    }
+
     operator uint8_t*() {
       return mData;
     }
