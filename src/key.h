@@ -29,11 +29,6 @@ namespace Spud {
       return mData;
     }
 
-    const Key& operator = (const Key& other) {
-      std::memcpy(mData, other, 32);
-      return *this;
-    }
-
     const Key& operator = (const uint8_t* other) {
       std::memcpy(mData, other, 32);
       return *this;

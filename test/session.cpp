@@ -57,8 +57,8 @@ Moka::Context tests("Session", [](Moka::Context& it) {
     uint8_t d1[256] = {0};
     uint8_t d2[256] = {0};
 
-    uint32_t cl1 = a.encode(c1, 256, m1, 5);
-    uint32_t cl2 = a.encode(c2, 256, m2, 5);
+    uint32_t cl1 = a.encode(c1, 256, m1, 10);
+    uint32_t cl2 = a.encode(c2, 256, m2, 9);
     uint32_t dl2 = b.decode(c2, cl2, d2, 256);
     uint32_t dl1 = b.decode(c1, cl1, d1, 256);
 

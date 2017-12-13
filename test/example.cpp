@@ -37,30 +37,30 @@ int main() {
   Spud::Session a(bpublic);
   Spud::Session b(bpublic, bsecret);
 
-  send(a, b, "Hi Bob. This is Alice.");
-  send(a, b, "Have you seen my slippers?");
-  send(a, b, "I can't find them anywhere.");
+  send(a, b, "> Hi Bob. This is Alice.");
+  send(a, b, "> Have you seen my slippers?");
+  send(a, b, "> I can't find them anywhere.");
 
-  send(b, a, "Hey Alice.");
-  send(b, a, "I think I might have...");
+  send(b, a, "< Hey Alice.");
+  send(b, a, "< I think I might have...");
 
-  send(a, b, "Oh good!");
+  send(a, b, "> Oh good!");
 
-  send(b, a, "Well...");
+  send(b, a, "< Well...");
 
-  send(a, b, "Well what?");
+  send(a, b, "> Well what?");
 
-  send(b, a, "I've only seen one.");
-  send(b, a, "It wasn't in great shape.");
-  send(b, a, "My cat was trying to eat it.");
+  send(b, a, "< I've only seen one.");
+  send(b, a, "< It wasn't in great shape.");
+  send(b, a, "< My cat was trying to eat it.");
 
-  send(a, b, "Oh.");
+  send(a, b, "> Oh.");
 
-  send(b, a, "I think he may have already eaten the other one.");
-  send(b, a, "Sorry.");
-  send(b, a, "Do you want this one back?");
+  send(b, a, "< I think he may have already eaten the other one.");
+  send(b, a, "< Sorry.");
+  send(b, a, "< Do you want this one back?");
 
-  send(a, b, "Uhh...");
-  send(a, b, "You can keep it.");
+  send(a, b, "> Uhh...");
+  send(a, b, "> You can keep it.");
   return 0;
 }

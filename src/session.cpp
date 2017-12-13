@@ -131,14 +131,17 @@ namespace Spud {
 
   const Key* Session::key(const uint8_t rk[32], uint32_t mn, uint32_t pn) {
     if(mRootChain.remote() != rk) {
-      // printf("Not my current key.\n");
+      // Skip unseen keys from the old chain:
       seek(mRootChain.remote(), pn);
+
+      // Generate a new root key:
       mRootChain.refresh(rk);
       mRecvChain.refresh(mRootChain.output());
       mRootChain.refresh();
       mSendChain.refresh(mRootChain.output());
     }
 
+    // Skip unseen keys from the new/current chain:
     seek(mRootChain.remote(), mn - 1);
     if(mRecvChain.count() == mn - 1) {
       mRecvChain.ratchet();

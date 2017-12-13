@@ -6,7 +6,22 @@
 
 namespace Spud {
   class Cache {
-    typedef std::pair<Key, uint32_t> ID;
+    struct ID {
+      uint32_t n;
+      uint8_t k[32];
+
+      ID(): n(0) {
+        std::memset(this->k, 0, 32);
+      }
+
+      ID(const uint8_t k[32], uint32_t n): n(n) {
+        std::memcpy(this->k, k, 32);
+      }
+
+      bool operator < (const ID& other) const {
+        return (n == other.n)? std::memcmp(k, other.k, 32) : (n < other.n);
+      }
+    };
   protected:
     std::map<ID, Key> mCache;
     ID*       mEpochs;
