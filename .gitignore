@@ -1,4 +1,6 @@
 /src/ext/
+*.dSYM
 *.out
+*.o
 
 .DS_Store

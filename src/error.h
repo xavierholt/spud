@@ -4,12 +4,12 @@
 #include <string>
 
 namespace Spud {
-  class Error: std::exception {
+  class Error: public std::exception {
   protected:
-    std::string mMessage;
+    const char* mMessage;
   public:
-    Error(const std::string& message): mMessage(message) {
-      mMessage.c_str();
+    Error(const char* message): mMessage(message) {
+      // All done.
     }
 
     ~Error() throw() {
@@ -17,7 +17,7 @@ namespace Spud {
     }
 
     const char* what() const throw() {
-      return mMessage.c_str();
+      return mMessage;
     }
   };
 }

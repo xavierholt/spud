@@ -1,6 +1,4 @@
-#include "error.h"
-#include "session.h"
-#include "wrappers.h"
+#include "../src/spud.h"
 
 #include <iostream>
 

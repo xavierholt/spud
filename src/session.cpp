@@ -139,7 +139,7 @@ namespace Spud {
       mSendChain.refresh(mRootChain.output());
     }
 
-    seek(rk, mn - 1);
+    seek(mRootChain.remote(), mn - 1);
     if(mRecvChain.count() == mn - 1) {
       mRecvChain.ratchet();
       return &mRecvChain.output();

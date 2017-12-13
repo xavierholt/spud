@@ -25,9 +25,9 @@ namespace Spud {
 
   void Cache::set(const uint8_t rk[32], uint32_t n, const Key& key) {
     ID cachekey(rk, n);
-    mCache.erase(mEpochs[mIndex]);
-    mEpochs[mIndex] = cachekey;
-    mIndex = (mIndex + 1) % mCount;
+    // mCache.erase(mEpochs[mIndex]);
+    // mEpochs[mIndex] = cachekey;
+    // mIndex = (mIndex + 1) % mCount;
 
     mCache[cachekey] = key;
   }
