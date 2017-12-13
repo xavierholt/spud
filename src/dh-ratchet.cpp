@@ -1,60 +1,74 @@
 #include "dh-ratchet.h"
+#include "wrappers.h"
 
-#include "nacl/crypto_auth_hmacsha512256.h"
-#include "nacl/crypto_box_curve25519xsalsa20poly1305.h"
-#include "nacl/crypto_scalarmult_curve25519.h"
+// Thirty-two bytes of constant:         01234567890123456789012345678901234567890
+static const uint8_t SPUD_CONSTANT[33] = "use me as the SPUD unique string";
+static const uint8_t ZERO_CONSTANT[32] = {0};
 
+#include <cstdio>
+static void printhex(const char* header, const uint8_t* data, uint32_t length) {
+  printf("%s: ", header);
+  for(uint32_t i = 0; i < length; ++i) {
+    printf("%02x", data[i]);
+  }
 
-// Thirty-two bytes of constant:       01234567890123456789012345678901234567890
-static const uint8_t INIT_CONSTANT[] = "there once was a man from verona";
-static const uint8_t SPUD_CONSTANT[] = "use me as the SPUD unique string";
-
+  printf("\n");
+}
 
 namespace Spud {
-  DHRatchet::DHRatchet(const uint8_t rk[32]) {
-    mOutput = INIT_CONSTANT;
+  DHRatchet::DHRatchet(const uint8_t init[32], const uint8_t rk[32]) {
+    mOutput = init;
     mRemote = rk;
-    mEpoch  = 0;
     refresh();
   }
 
-  DHRatchet::DHRatchet(const uint8_t pk[32], const uint8_t sk[32], const uint8_t rk[32]) {
-    mOutput = INIT_CONSTANT;
+  DHRatchet::DHRatchet(const uint8_t init[32], const uint8_t pk[32], const uint8_t sk[32]) {
+    mOutput = init;
+    mRemote = ZERO_CONSTANT;
     mPublic = pk;
     mSecret = sk;
-    mEpoch  = 0;
+  }
+
+  DHRatchet::DHRatchet(const uint8_t init[32], const uint8_t pk[32], const uint8_t sk[32], const uint8_t rk[32]) {
+    mOutput = init;
+    mPublic = pk;
+    mSecret = sk;
     refresh(rk);
   }
 
-  uint32_t DHRatchet::epoch() const {
-    return mEpoch;
+  void DHRatchet::debug() {
+    printhex("Public", mPublic, 32);
+    printhex("Secret", mSecret, 32);
+    printhex("Remote", mRemote, 32);
+    printhex("Shared", mShared, 32);
+    printhex("Output", mOutput, 32);
+    printf("\n");
   }
 
   const Key& DHRatchet::output() const {
     return mOutput;
   }
 
-  void DHRatchet::ratchet() {
-    Key shared;
-    // Diffie-Hellman Key Agreement:
-    crypto_scalarmult_curve25519(shared, mSecret, mRemote);
+  const Key& DHRatchet::publik() const {
+    return mPublic;
+  }
 
-    // HKDF for the next root key (like Krawczysk, but without the index):
-    // See https://eprint.iacr.org/2010/264.pdf for details.
-    crypto_auth_hmacsha512256(mOutput, shared, 32, mOutput);
-    crypto_auth_hmacsha512256(mOutput, SPUD_CONSTANT, 32, mOutput);
-    mEpoch += 1;
+  void DHRatchet::ratchet() {
+    Spud::exp(mShared, mSecret, mRemote);
+    Spud::kdf(mOutput, mShared, mOutput, SPUD_CONSTANT);
   }
 
   void DHRatchet::refresh() {
-    // Generate a new keypair:
-    crypto_box_curve25519xsalsa20poly1305_keypair(mPublic, mSecret);
+    Spud::keygen(mPublic, mSecret);
     ratchet();
   }
 
-  void DHRatchet::refresh(const uint8_t remote[32]) {
-    // Got a new reomte public key:
-    mRemote = remote;
+  void DHRatchet::refresh(const uint8_t rk[32]) {
+    mRemote = rk;
     ratchet();
+  }
+
+  const Key& DHRatchet::remote() const {
+    return mRemote;
   }
 }

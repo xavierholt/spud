@@ -6,18 +6,19 @@
 
 namespace Spud {
   class Cache {
+    typedef std::pair<Key, uint32_t> ID;
   protected:
-    std::map<uint64_t,Key> mCache;
-    uint64_t* mEpochs;
+    std::map<ID, Key> mCache;
+    ID*       mEpochs;
     uint32_t  mIndex;
     uint32_t  mCount;
   public:
     Cache(uint32_t count);
     ~Cache();
 
-    void       del(uint32_t repoch, uint32_t mepoch);
-    const Key* get(uint32_t repoch, uint32_t mepoch) const;
-    void       set(uint32_t repoch, uint32_t mepoch, const Key& key);
+    void       del(const uint8_t rk[32], uint32_t n);
+    const Key* get(const uint8_t rk[32], uint32_t n) const;
+    void       set(const uint8_t rk[32], uint32_t n, const Key& key);
   };
 }
 

@@ -9,17 +9,20 @@ namespace Spud {
     Key      mPublic;
     Key      mSecret;
     Key      mRemote;
+    Key      mShared;
     Key      mOutput;
-    uint32_t mEpoch;
   public:
-    DHRatchet(const uint8_t rk[32]);
-    DHRatchet(const uint8_t pk[32], const uint8_t sk[32], const uint8_t rk[32]);
+    DHRatchet(const uint8_t init[32], const uint8_t rk[32]);
+    DHRatchet(const uint8_t init[32], const uint8_t pk[32], const uint8_t sk[32]);
+    DHRatchet(const uint8_t init[32], const uint8_t pk[32], const uint8_t sk[32], const uint8_t rk[32]);
 
-    uint32_t epoch() const;
+    void debug();
     const Key& output() const;
+    const Key& publik() const;
     void ratchet();
     void refresh();
     void refresh(const uint8_t input[32]);
+    const Key& remote() const;
   };
 }
 

@@ -1,3 +1,4 @@
 /src/ext/
+*.out
 
 .DS_Store
