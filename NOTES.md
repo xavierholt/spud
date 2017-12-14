@@ -96,6 +96,8 @@ Given how easy it is to forge a UDP packet, this is a blocker for use in the
 real world.  The fix is relatively simple, but there may be performance problems
 (see below).
 
+**Update:** Fixed in [PR #1](https://github.com/xavierholt/spud/pull/1).
+
 
 ### Efficiency
 
