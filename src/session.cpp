@@ -5,19 +5,6 @@
 
 #include <cstdio>
 
-// // Read 16 bits from network byte order:
-// static inline uint16_t r16(const uint8_t* bytes) {
-//   uint16_t a = uint16_t(bytes[0]) << 8;
-//   uint16_t b = uint16_t(bytes[1]) << 0;
-//   return a | b;
-// }
-
-// // Store 16 bits in network byte order:
-// static inline void w16(uint16_t value, uint8_t* bytes) {
-//   bytes[0] = value >> 8;
-//   bytes[1] = value >> 0;
-// }
-
 // Read 32 bits from network byte order:
 static inline uint32_t r32(const uint8_t* bytes) {
   uint32_t a = uint32_t(bytes[0]) << 24;
@@ -47,15 +34,6 @@ static const uint8_t RECV_CONSTANT[] = "and this one'll do recv ratchets";
 // 68 - 71: Previous Message Count
 // 72 - ??: Message Data
 
-// static void printhex(const char* header, const uint8_t* data, uint32_t length) {
-//   printf("%s: ", header);
-//   for(uint32_t i = 0; i < length; ++i) {
-//     printf("%02x", data[i]);
-//   }
-
-//   printf("\n");
-// }
-
 namespace Spud {
   Session::Session(const uint8_t rk[32]):
     mRootChain(ROOT_CONSTANT, rk),
@@ -84,20 +62,12 @@ namespace Spud {
     uint32_t mn = r32(c + 64);
     uint32_t pn = r32(c + 68);
 
-    // printf("Received: mn = %i, pn = %i\n", mn, pn);
-
     if(ml < cl - 72) {
       throw Spud::Error("Buffer too short to hold message!");
     }
 
-    // mRootChain.debug();
     const Key* k = key(c + 32, mn, pn);
-    // mRootChain.debug();
-    // mRecvChain.debug();
-
     if(k == NULL) throw Spud::Error("Could not find decryption key.");
-    // printhex("Decrypt Key", *k, 32);
-
     if(!Spud::verify(c, c + 32, cl - 32, *k)) {
       throw Spud::Error("Invalid message authentication code.");
     }
@@ -118,14 +88,8 @@ namespace Spud {
     w32(mSendChain.count(), c + 64);
     w32(mSendChain.prev(),  c + 68);
 
-    // Note: Using the message numbers / counts (c[64:72]) as a nonce.
     Spud::encrypt(c + 72, m, ml, c + 64, mSendChain.output());
     Spud::mac(c, c + 32, ml + 40, mSendChain.output());
-    // printf("Send: mn = %i, pn = %i\n", mSendChain.count(), mSendChain.prev());
-    // printhex("Encrypt Key", mSendChain.output(), 32);
-    // printhex("Encoded", c, ml + 72);
-    // mRootChain.debug();
-    // mSendChain.debug();
     return ml + 72;
   }
 

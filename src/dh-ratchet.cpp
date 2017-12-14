@@ -36,7 +36,7 @@ namespace Spud {
     refresh(rk);
   }
 
-  void DHRatchet::debug() {
+  void DHRatchet::debug() const {
     printhex("Public", mPublic, 32);
     printhex("Secret", mSecret, 32);
     printhex("Remote", mRemote, 32);

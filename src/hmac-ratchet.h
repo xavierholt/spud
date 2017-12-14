@@ -18,8 +18,8 @@ namespace Spud {
   public:
     HMACRatchet(const uint8_t init[32], const uint8_t key[32]);
 
-    void debug();
     uint32_t count() const;
+    void debug() const;
     const Key& output() const;
     uint32_t prev() const;
     void ratchet();

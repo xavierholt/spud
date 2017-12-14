@@ -25,7 +25,7 @@ namespace Spud {
     return mCount;
   }
 
-  void HMACRatchet::debug() {
+  void HMACRatchet::debug() const {
     printhex("Setup", mSetupKey, 32);
     printhex("Chain", mChainKey, 32);
     printhex("Value", mValueKey, 32);

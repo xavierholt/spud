@@ -20,7 +20,7 @@ namespace Spud {
     DHRatchet(const uint8_t init[32], const uint8_t pk[32], const uint8_t sk[32]);
     DHRatchet(const uint8_t init[32], const uint8_t pk[32], const uint8_t sk[32], const uint8_t rk[32]);
 
-    void debug();
+    void debug() const;
     const Key& output() const;
     const Key& publik() const;
     void ratchet();

@@ -5,15 +5,6 @@
 #include <arpa/inet.h>
 #include <unistd.h>
 
-// static void printhex(const char* header, const void* data, uint32_t length) {
-//   printf("%s: ", header);
-//   for(uint32_t i = 0; i < length; ++i) {
-//     printf("%02x", ((char*)data)[i]);
-//   }
-
-//   printf("\n");
-// }
-
 namespace Spud {
   Socket::Socket(const Address& bindaddr): mConnections() {
     mFileDescriptor = socket(AF_INET, SOCK_DGRAM, 0);
@@ -60,15 +51,8 @@ namespace Spud {
   }
 
   void Socket::connect(const Address& addr, const Key& pubkey) {
-    // printhex("Add Addr", &addr, addr.size());
     Session* session = new Session(pubkey);
     mConnections[addr] = session;
-
-    // uint8_t c[2048];
-    // uint32_t cl = session->encode(c, 2048, NULL, 0);
-    // if(sendto(mFileDescriptor, c, cl, 0, addr, addr.size()) < 0) {
-    //   throw Spud::Error("Broadcast failed.");
-    // }
   }
 
   uint32_t Socket::recv(uint8_t* m, uint32_t ml) {
@@ -81,7 +65,6 @@ namespace Spud {
       throw Spud::Error("Receive failed.");
     }
 
-    // printhex("Get Addr", &addr, addr.size());
     std::map<Address,Session*>::iterator i = mConnections.find(addr);
     if(i == mConnections.end()) {
       if(mAccepting) {
