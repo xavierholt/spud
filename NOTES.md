@@ -40,6 +40,7 @@ NaCl has authenticated encryption, but doesn't support the plaintext "additional
 data" section available in some authenticated encryption schemes.  I needed this
 to ensure that (plaintext) headers couldn't be modified without detection, so I
 ended up doing it myself (a modified encrypt-then-mac scheme):
+ - https://en.wikipedia.org/wiki/Authenticated_encryption#Encrypt-then-MAC
 
 ```
 c = Encrypt(message, key)
@@ -55,6 +56,7 @@ run through a key derivation function to generate a message encryption key, a
 message authentication key, and a nonce.  I chose to avoid this, and used the
 message keys directly for both encryption and authentication, and used the
 message sequence number as the nonce.
+ - https://signal.org/docs/specifications/doubleratchet/#recommended-cryptographic-algorithms
 
 
 ## Bugs and Miscellany
@@ -64,6 +66,7 @@ message sequence number as the nonce.
 In its current state, a malicious packet can trigger an invalid ratchet of the
 DH "root" chain, breaking future legitimate communication.  This is becuase the
 current implementation doesn't obey this part of the spec:
+ - https://signal.org/docs/specifications/doubleratchet/#decrypting-messages
 
 > If an exception is raised (e.g. message authentication failure) then the
 > message is discarded and changes to the state object are discarded. Otherwise,
@@ -102,6 +105,7 @@ Header encryption (section 4 of the spec) is not currently implemented (it's
 technically optional), but might solve the efficiency concerns above.  This adds
 "header keys" (and "next header keys"), shared symmetric keys that only change
 when the root key changes.
+ - https://signal.org/docs/specifications/doubleratchet/#double-ratchet-with-header-encryption
 
 Since the header is encrypted with authenticated encryption, detecting forged
 packets is now a matter of two symmetric key decryptions: once with the current
@@ -122,11 +126,12 @@ client's address.  The client then sends a `connect` message with the cookie it
 received in the previous step.  If the cookie is valid, the server creates a
 connection.
 
-This is used in DTLS to prevent malicious packets from causing "excessive
-calculation" on the server.  The idea is that the cookie is easy for the server
-to calculate and verify, but unforgeable.  An HMAC of the client's IP address
-and port (and probably a timestamp) makes sure that the client actually responds
-on the source address it sent.
+This is used in DTLS to prevent malicious packets from causing "expensive
+cryptographic calculations" on the server.  The idea is that the cookie is easy
+for the server to calculate and verify, but unforgeable. An HMAC of the client's
+IP address and port (and likely a timestamp) makes sure that the client actually
+responds on the source address it claimed.
+ - https://tools.ietf.org/html/rfc6347#section-4.2.1
 
 Alternatively, skipping the cookie exchange but requiring a proof-of-work on the
 first message would make it take significantly more investment to initiate a
@@ -141,9 +146,9 @@ field (the values populated by `recvfrom` seem to have an extra flag set):
 
 ```
 [14:47:43 holt@Minerva spud]$ ./client.out
-Add Addr: 00021e677f0000010000000000000000
+Send Addr: 00021e677f0000010000000000000000
 hello
-Get Addr: 10021e677f0000010000000000000000
+Recv Addr: 10021e677f0000010000000000000000
 > hello
 ```
 

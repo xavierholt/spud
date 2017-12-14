@@ -14,6 +14,7 @@ namespace Spud {
 
   void encrypt(uint8_t* c, const uint8_t* m, uint32_t l, const uint8_t nonce[8], const uint8_t* key) {
     // Encrypts by XORing with the Salsa 20 stream cipher.
+    // This differs from the recommended SIV / CBC+HMAC, and may leak data if a key is reused.
     crypto_stream_salsa20_xor(c, m, l, nonce, key);
   }
 
