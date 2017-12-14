@@ -118,7 +118,7 @@ Moka::Context tests("Session", [](Moka::Context& it) {
 
     uint32_t cl1 = a.encode(c1, 256, m1, 14);
     uint32_t cl2 = x.encode(c2, 256, m2, 19);
-    uint32_t cl3 = a.encode(c3, 256, m2, 14);
+    uint32_t cl3 = a.encode(c3, 256, m3, 14);
 
     uint32_t dl1 = b.decode(c1, cl1, d1, 256);
     must_equal(dl1, 14);
@@ -129,7 +129,7 @@ Moka::Context tests("Session", [](Moka::Context& it) {
     });
 
     uint32_t dl3 = b.decode(c3, cl3, d3, 256);
-    must_equal(dl3, 19);
+    must_equal(dl3, 14);
     must_equal(std::memcmp(m3, d3, dl3), 0);
   });
 });
