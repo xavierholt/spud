@@ -10,15 +10,15 @@
 namespace Spud {
   class DHRatchet {
   protected:
-    Key      mPublic;
-    Key      mSecret;
-    Key      mRemote;
-    Key      mShared;
-    Key      mOutput;
+    Key mPublic;
+    Key mSecret;
+    Key mRemote;
+    Key mShared;
+    Key mOutput;
   public:
+    DHRatchet(const DHRatchet& other);
     DHRatchet(const uint8_t init[32], const uint8_t rk[32]);
     DHRatchet(const uint8_t init[32], const uint8_t pk[32], const uint8_t sk[32]);
-    DHRatchet(const uint8_t init[32], const uint8_t pk[32], const uint8_t sk[32], const uint8_t rk[32]);
 
     void debug() const;
     const Key& output() const;

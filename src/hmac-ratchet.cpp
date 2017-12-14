@@ -16,6 +16,14 @@ static void printhex(const char* header, const uint8_t* data, uint32_t length) {
 }
 
 namespace Spud {
+  HMACRatchet::HMACRatchet(const HMACRatchet& other) {
+    mSetupKey = other.mSetupKey;
+    mChainKey = other.mChainKey;
+    mValueKey = other.mValueKey;
+    mCount    = other.mCount;
+    mPrev     = other.mPrev;
+  }
+
   HMACRatchet::HMACRatchet(const uint8_t init[32], const uint8_t key[32]): mCount(0) {
     mSetupKey = init;
     refresh(key);

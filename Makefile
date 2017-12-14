@@ -4,6 +4,7 @@ OBJS=\
   obj/hmac-ratchet.o \
   obj/session.o \
   obj/socket.o \
+  obj/state.o \
   obj/wrappers.o
 
 TESTS=\
