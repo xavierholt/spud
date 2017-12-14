@@ -16,6 +16,7 @@ namespace Spud {
     uint32_t mCount;
     uint32_t mPrev;
   public:
+    HMACRatchet(const HMACRatchet& other);
     HMACRatchet(const uint8_t init[32], const uint8_t key[32]);
 
     uint32_t count() const;

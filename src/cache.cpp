@@ -1,14 +1,8 @@
 #include "cache.h"
 
 namespace Spud {
-  Cache::Cache(uint32_t count) {
-    mIndex  = 0;
-    mCount  = count;
-    mEpochs = new ID[count];
-  }
-
-  Cache::~Cache() {
-    delete [] mEpochs;
+  Cache::Cache(): mEpochs(), mIndex(0) {
+    // All done.
   }
 
   void Cache::del(const uint8_t rk[32], uint32_t n) {
@@ -26,7 +20,7 @@ namespace Spud {
     ID cachekey(rk, n);
     mCache.erase(mEpochs[mIndex]);
     mEpochs[mIndex] = cachekey;
-    mIndex = (mIndex + 1) % mCount;
+    mIndex = (mIndex + 1) % 32;
 
     mCache[cachekey] = key;
   }

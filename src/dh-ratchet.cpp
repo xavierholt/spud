@@ -16,6 +16,14 @@ static void printhex(const char* header, const uint8_t* data, uint32_t length) {
 }
 
 namespace Spud {
+  DHRatchet::DHRatchet(const DHRatchet& other) {
+    mPublic = other.mPublic;
+    mSecret = other.mSecret;
+    mRemote = other.mRemote;
+    mShared = other.mShared;
+    mOutput = other.mOutput;
+  }
+
   DHRatchet::DHRatchet(const uint8_t init[32], const uint8_t rk[32]) {
     mOutput = init;
     mRemote = rk;
@@ -27,13 +35,6 @@ namespace Spud {
     mRemote = ZERO_CONSTANT;
     mPublic = pk;
     mSecret = sk;
-  }
-
-  DHRatchet::DHRatchet(const uint8_t init[32], const uint8_t pk[32], const uint8_t sk[32], const uint8_t rk[32]) {
-    mOutput = init;
-    mPublic = pk;
-    mSecret = sk;
-    refresh(rk);
   }
 
   void DHRatchet::debug() const {

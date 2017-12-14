@@ -28,12 +28,10 @@ namespace Spud {
     };
   protected:
     std::map<ID, Key> mCache;
-    ID*       mEpochs;
+    ID        mEpochs[32];
     uint32_t  mIndex;
-    uint32_t  mCount;
   public:
-    Cache(uint32_t count);
-    ~Cache();
+    Cache();
 
     void       del(const uint8_t rk[32], uint32_t n);
     const Key* get(const uint8_t rk[32], uint32_t n) const;
