@@ -83,20 +83,20 @@ message sequence number as the nonce.
 
 ### Chain Interruption
 
-In its current state, a malicious packet can trigger an invalid ratchet of the
-DH "root" chain, breaking future legitimate communication.  This is becuase the
-current implementation doesn't obey this part of the spec:
+**Update:** Fixed in [PR #1](https://github.com/xavierholt/spud/pull/1).
+
+~In its current state, a malicious packet can trigger an invalid ratchet of the
+DH "root" chain, breaking future legitimate communication.  This is because the
+current implementation doesn't obey this part of the spec:~
  - https://signal.org/docs/specifications/doubleratchet/#decrypting-messages
 
 > If an exception is raised (e.g. message authentication failure) then the
 > message is discarded and changes to the state object are discarded. Otherwise,
 > the decrypted plaintext is accepted and changes to the state object are stored.
 
-Given how easy it is to forge a UDP packet, this is a blocker for use in the
-real world.  The fix is relatively simple, but there may be performance problems
-(see below).
-
-**Update:** Fixed in [PR #1](https://github.com/xavierholt/spud/pull/1).
+~Given how easy it is to forge a UDP packet, this is a blocker for use in the
+real world.~  The fix is relatively simple, but there may be performance
+problems (see below).
 
 
 ### Efficiency
