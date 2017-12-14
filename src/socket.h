@@ -32,6 +32,7 @@ namespace Spud {
     void     connect(const Address& addr, const Key& pubkey);
     void     send(const Address& addr, const uint8_t* m, uint32_t ml);
     uint32_t recv(uint8_t* m, uint32_t ml);
+    uint32_t recv(Address& addr, uint8_t* m, uint32_t ml);
   };
 }
 

@@ -1,5 +1,6 @@
 #include "../src/spud.h"
 
+#include <cstdio>
 #include <fstream>
 #include <iostream>
 
@@ -20,9 +21,15 @@ int main() {
   socket.accept(true);
 
   uint8_t m[2048];
+  uint8_t b[2048];
   while(true) {
-    uint32_t ml = socket.recv(m, 2048);
-    socket.broadcast(m, ml);
+    Spud::Address address;
+    uint32_t ml = socket.recv(address, m, 2048);
+    m[ml] = '\0'; // Null-terminated C strings!
+
+    // Label who said what for a better client experience:
+    uint32_t bl = snprintf((char*) b, 2048, "[Client %5d]: %s", address.port(), (char*) m);
+    socket.broadcast(b, bl);
   }
 
   return 0;

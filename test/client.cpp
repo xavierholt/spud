@@ -22,7 +22,6 @@ int main() {
 
     while(true) {
       ml = socket.recv(m, 2048);
-      std::cout << "> ";
       std::cout.write((char*) m, ml);
       std::cout << "\n";
     }

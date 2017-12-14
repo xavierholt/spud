@@ -18,7 +18,27 @@ other terminals.  They'll automatically connect to the server.  There's no
 prompt, but you can type into any of the clients; once you hit enter, your
 message is sent, encrypted, to the server, and then broadcast, also encrypted,
 to all known clients (i.e. clients that have sent at least one message to the
-server before)
+server before).
+
+```
+[17:28:39 holt@Minerva spud]$ ./client.out
+Hello?
+[Client 59578]: Hello?
+[Client 53374]: Hello?
+Hey!
+[Client 59578]: Hey!
+[Client 53374]: Oh hey Alice.
+[Client 53374]: What's up?
+Not much. Bored.
+[Client 59578]: Not much. Bored.
+you seen Eve recently?
+[Client 59578]: you seen Eve recently?
+[Client 49218]: ...
+[Client 53374]: ^^^ !!!
+Figures...
+[Client 59578]: Figures...
+^C
+```
 
 
 ## Implementation Differences

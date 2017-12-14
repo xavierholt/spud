@@ -56,9 +56,12 @@ namespace Spud {
   }
 
   uint32_t Socket::recv(uint8_t* m, uint32_t ml) {
-    uint8_t c[2048];
     Address addr;
+    return recv(addr, m, ml);
+  }
 
+  uint32_t Socket::recv(Address& addr, uint8_t* m, uint32_t ml) {
+    uint8_t c[2048];
     socklen_t al = addr.size();
     ssize_t cl = recvfrom(mFileDescriptor, c, 2048, 0, addr, &al);
     if(cl < 0) {
