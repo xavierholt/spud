@@ -23,7 +23,7 @@ obj/%.o : src/%.cpp
 	${CXX} $(CXX_FLAGS) -c -o $@ $<
 
 %.out: test/%.cpp
-	${CXX} $(CXX_FLAGS) -std=c++11 -g -o $@ $< lib/nacl/* obj/*.o
+	${CXX} $(CXX_FLAGS) -std=c++11 -o $@ $< lib/nacl/* obj/*.o
 
 clean:
 	rm obj/*.o

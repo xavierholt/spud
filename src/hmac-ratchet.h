@@ -3,6 +3,10 @@
 
 #include "key.h"
 
+// This class stores a message key ratchet.
+// It's used by Session to keep track of the send and recv chains.
+// Users shouldn't need to use it directly.
+
 namespace Spud {
   class HMACRatchet {
   protected:

@@ -3,6 +3,9 @@
 
 #include <cstdint>
 
+// These are wrappers around the NaCl crypto functions we use.
+// Look in the wrappers.cpp file to see how they're implemented.
+
 namespace Spud {
   void decrypt(const uint8_t* c, uint8_t* m, uint32_t l, const uint8_t nonce[8], const uint8_t* key);
   void encrypt(uint8_t* c, const uint8_t* m, uint32_t l, const uint8_t nonce[8], const uint8_t* key);

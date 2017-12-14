@@ -8,6 +8,12 @@
 #include "key.h"
 #include "session.h"
 
+// Network / UDP stuff happens here.
+// This class opens a socket on creation, then can send and receive as requested.
+// It can take a known keypair to listen with (server mode) if desired.
+// It maintains a map of (UDP Address) -> (Session) for all known connections.
+// The "accepting" flag determines whether or not it allows connections from unknown sources.
+
 namespace Spud {
   class Socket {
   protected:

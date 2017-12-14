@@ -4,6 +4,10 @@
 #include "key.h"
 #include <map>
 
+// This is a cache of (root-key, seq) -> message-key
+// It's used by the Session class to keep track of skipped keys.
+// Users shouldn't need to use this class directly.
+
 namespace Spud {
   class Cache {
     struct ID {

@@ -4,6 +4,10 @@
 #include <cstdint>
 #include <cstring>
 
+// This is a wrapper class for thirty-two-bit keys.
+// It zeros out its memory after use, and does constant-time comparisons.
+// It's mostly just a wrapper around a bunch of bytes, though.
+
 namespace Spud {
   class Key {
   protected:

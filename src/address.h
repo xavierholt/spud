@@ -6,6 +6,9 @@
 #include <sys/socket.h>
 #include <arpa/inet.h>
 
+// This is a wrapper around the sockaddr_in struct.
+// It doesn't do much - just makes them easier to work with.
+
 namespace Spud {
   class Address {
   protected:

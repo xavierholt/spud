@@ -3,6 +3,10 @@
 
 #include <string>
 
+// This is the Spud error class.
+// It's thrown whenever something goes wrong.
+// The error messages are a bit generic...
+
 namespace Spud {
   class Error: public std::exception {
   protected:

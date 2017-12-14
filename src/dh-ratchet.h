@@ -3,6 +3,10 @@
 
 #include "key.h"
 
+// This class stores the Diffie-Hellman ratchet.
+// It's used by Session to keep track of the root chain.
+// Users shouldn't need to use it directly.
+
 namespace Spud {
   class DHRatchet {
   protected:

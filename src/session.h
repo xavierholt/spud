@@ -5,6 +5,11 @@
 #include "dh-ratchet.h"
 #include "hmac-ratchet.h"
 
+// This is where all the action is.
+// A Session keeps track of all the ratchets for one end of a single connection.
+// The encode and decode methods do en- and decryption, and adjust the ratchets as necessary.
+// This class does not do any networking - that all happens in Socket.
+
 namespace Spud {
   class Session {
   protected:
